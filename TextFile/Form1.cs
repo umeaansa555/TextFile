@@ -22,13 +22,14 @@ namespace TextFile
 
         private void loadColoursButton_Click(object sender, EventArgs e)
         {
-
+            colours = File.ReadAllLines("colourFile.txt").ToList();
+            
             DisplayColours();
         }
 
         private void saveColoursButton_Click(object sender, EventArgs e)
         {
-
+            File.WriteAllLines("colourFile.txt", colours);
         }
 
         private void sortColoursButton_Click(object sender, EventArgs e)
@@ -38,7 +39,8 @@ namespace TextFile
 
         private void addColourButton_Click(object sender, EventArgs e)
         {
-
+            colours.Add(colourInput.Text);
+            DisplayColours();
         }
 
         private void removeButton_Click(object sender, EventArgs e)
@@ -65,6 +67,15 @@ namespace TextFile
 
         private void loadScoresButton_Click(object sender, EventArgs e)
         {
+            List<string> scoreList = File.ReadAllLines("scoreFile.txt").ToList();
+
+            for(int i = 0; i < scoreList.Count; i +=2)
+            {
+                string name = scoreList[i];
+                int score = Convert.ToInt32(scoreList[i+1]);
+
+                scores.Add(new HighScore(name, score));
+            }
 
             DisplayScores();
         }
@@ -81,7 +92,13 @@ namespace TextFile
 
         private void addScoreButton_Click(object sender, EventArgs e)
         {
+            string name = nameInput.Text;
+            int score = Convert.ToInt32(scoreInput.Text);
 
+            HighScore newScore = new HighScore(name, score);
+            scores.Add(newScore);
+
+            DisplayScores();
         }
 
         private void removeScoresButton_Click(object sender, EventArgs e)
